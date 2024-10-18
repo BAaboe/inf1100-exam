@@ -18,8 +18,6 @@ stackData_t pop(stack_t* stack){
 	}
 
 	return stack->stack[stack->sp];
-
-	// Do some check to decrese the stack size
 }
 
 //Push a stackData_t to the stack
