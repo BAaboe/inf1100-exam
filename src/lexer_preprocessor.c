@@ -35,6 +35,7 @@ void strip_newlines(char *str) {
 
 // replace all (comments) with spaces
 void strip_comments(char *str) {
+	//Funny
   for (char *pt = str; *pt != '\0'; pt++) {
     if (*pt == '(') {
       while (*pt != ')') {
