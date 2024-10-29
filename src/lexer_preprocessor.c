@@ -35,19 +35,24 @@ void strip_newlines(char *str) {
 
 // replace all (comments) with spaces
 void strip_comments(char *str) {
-	//Funny
+	int par_count = 0;
+	char is_string = 0;
   for (char *pt = str; *pt != '\0'; pt++) {
-    if (*pt == '(') {
-      while (*pt != ')') {
-        assert(*pt != '\0'); // no neverending comments allowed
-        *pt = ' ';
-        pt++;
-      }
-
-      *pt = ' ';
-      pt++;
-    }
-  }
+		if(*pt == '~'){
+			is_string^=0b1;
+		}
+		if(!is_string){
+			if (*pt == '(') {
+				par_count++;
+			} else if(*pt == ')'){
+				par_count--;
+				*pt = ' ';
+			}
+		}
+		if(par_count != 0){
+			*pt = ' ';
+		}
+	}
 }
 
 char** load_program(char *src_file) {
