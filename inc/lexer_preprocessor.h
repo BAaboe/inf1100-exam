@@ -1,6 +1,11 @@
 #ifndef __LEXER_PREPROCESSOR_H__
 #define __LEXER_PREPROCESSOR_H__
 
+typedef struct {
+	int pos;
+	char* label_name;
+} label_t;
+
 // no program can be more than MAXWORDS long
 #define MAXWORDS 1024
 
