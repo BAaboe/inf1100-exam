@@ -71,7 +71,7 @@ char** load_program(char *src_file) {
 	//Need better system for this, maybe a Enum
 	char reading = 0;
 	char reading_str = 0;
-	char reading_lable = 0;
+	char reading_label = 0;
 
 	int start;
 	int i = 0;
@@ -82,7 +82,7 @@ char** load_program(char *src_file) {
 			reading = 1;
 			start = i;
 			if(buffer[i] == '~') reading_str=1;
-			if(buffer[i] == '#') reading_lable=1;
+			if(buffer[i] == '#') reading_label=1;
 
 			i++;
 			continue;
@@ -97,8 +97,8 @@ char** load_program(char *src_file) {
 				end = i;
 			}
 			
-			//Finds and stores where the lable are located
-			if(reading_lable){
+			//Finds and stores where the label are located
+			if(reading_label){
 				labelec++;
 
 				//Make new label
@@ -108,18 +108,18 @@ char** load_program(char *src_file) {
 				memcpy(label.label_name, buffer+start+1, end-start-1);
 				label.label_name[end-start+1] = '\0';
 				
-				//Allocates more space for the lables
+				//Allocates more space for the labels
 				if(labelec == 1){
 					labeles = malloc(sizeof(label_t));
 				} else{
 					labeles = realloc(labeles, labelec*sizeof(label_t));
 				}
 				
-				//Stores the lable
+				//Stores the label
 				labeles[labelec-1] = label;
 
 				reading = 0;
-				reading_lable = 0;
+				reading_label = 0;
 				continue;
 			}
 
@@ -134,7 +134,7 @@ char** load_program(char *src_file) {
 			//Check if macro
 			if(!strcmp(token, ".cgoto")){
 				char found = 0;
-				//Finds the lable in the lable list
+				//Finds the label in the label list
 				for(int j = 0; j<labelec; j++){
 					if(!strcmp(labeles[j].label_name, program[token_count-1])){
 						//Calculates how many steps back you need to go
@@ -179,7 +179,7 @@ char** load_program(char *src_file) {
 
 			reading = 0;
 			reading_str = 0;
-			reading_lable = 0;
+			reading_label = 0;
 		}
 
 		i++;

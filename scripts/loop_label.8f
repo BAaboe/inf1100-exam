@@ -1,5 +1,5 @@
 (a "simple" loop that counts to 10)
-#loop                       (Defines lable loop)
+#loop                       (Defines label loop)
 1                           (start at 1)
   .dup .print .newline      (print the current number)  
   1 .+                      (add 1) 
