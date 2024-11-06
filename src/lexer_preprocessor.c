@@ -128,8 +128,6 @@ char** load_program(char *src_file) {
 
 			//Copies the right token to the newly allocated space
 			memcpy(token, buffer+start, end-start);
-			//Makes sure that the string is zero terminated
-			token[end-start+1] = '\0';
 
 			//Check if macro
 			if(!strcmp(token, ".cgoto")){
