@@ -16,7 +16,6 @@ int main(int argc, char **argv) {
 	// program is an array of strings; the end of the program is signified by a
 	// NULL pointer.
 	program = load_program(argv[1]);
-	printf("wah\n");
 
 	//Creates a interpreter object, with a stack with starting size of 5, and loads the program.
 	interpreter_t* interpreter = createInterpreter(5, program);

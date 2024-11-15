@@ -166,7 +166,8 @@ char** load_program(char *src_file) {
 					}
 				}
 				if(!found){
-					printf("\33[1;31mError:\33[0m Lable not found\n");
+					printf("\33[1;31mError:\33[0m Lable \"%s\" not found\n",program[token_count-1]);
+					exit(-1);
 				}
 			}else{
 				//Adds the token to to the program
@@ -182,6 +183,7 @@ char** load_program(char *src_file) {
 
 		i++;
   }
+  //TODO: Add the ability to be able to .cgot forward in the script
 
   free(buffer);
 
