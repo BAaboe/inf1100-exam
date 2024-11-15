@@ -73,7 +73,7 @@ int cjmp(stack_t* stack, int pc){
 	stackData_t dpc = pop(stack);
 	stackData_t conditonFlag = pop(stack);
 	if(dpc.type || conditonFlag.type){
-		printf("\33[1;31mError:\33[0m .cjump needs to integers at the top of the stack\n");
+		printf("\33[1;31mError:\33[0m .cjump needs two integers at the top of the stack\n");
 	}
 	if(conditonFlag.data.iData){
 		return pc+dpc.data.iData-1;

@@ -19,24 +19,24 @@ int main(int argc, char **argv) {
 
 	//Creates a interpreter object, with a stack with starting size of 5, and loads the program.
 	interpreter_t* interpreter = createInterpreter(5, program);
-	//Steps through every word in the program
-	while(1){
-		//Gets current instruction
-		char* instruction = step(interpreter);
-		//Check if at the end of program
-		if(instruction == NULL){break;}
-		//Interpret the instruction
-		interpret(interpreter, instruction);
-	}
+	// //Steps through every word in the program
+	 while(1){
+	 	//Gets current instruction
+	 	char* instruction = step(interpreter);
+	 	//Check if at the end of program
+	 	if(instruction == NULL){break;}
+	 	//Interpret the instruction
+	 	interpret(interpreter, instruction);
+	 }
 
-	free(interpreter);
+	 free(interpreter);
 
 	//test();
 	// prints out the words in the program array; uncomment to get an idea of how
 	// the program is stored in memory.
-	// for (char **pc = program; *pc != NULL; pc++) {
-	// 	printf("program[%i]: %s\n", (int) (pc - program), *pc);
-	// }
+	//for (char **pc = program; *pc != NULL; pc++) {
+	//	printf("program[%i]: %s\n", (int) (pc - program), *pc);
+	//}
 
 	return 0;
 }

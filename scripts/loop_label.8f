@@ -1,0 +1,9 @@
+(a "simple" loop that counts to 10)
+#loop                       (Defines label loop)
+1                           (start at 1)
+  .dup .print .newline      (print the current number)  
+  1 .+                      (add 1) 
+  .dup  11 .swap .>?       (is 11 > n?) 
+loop .cgoto                  (then goto loop) 
+~end of loop here~ .print .newline
+
