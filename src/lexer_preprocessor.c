@@ -26,10 +26,10 @@ char *read_file(char *source_file) {
   return buffer;
 }
 
-// replace all newlines with a space
+// replace all newlines and tabs with a space
 void strip_newlines(char *str) {
   for (char *pt = str; *pt != '\0'; pt++) {
-    if (*pt == '\n') *pt = ' ';
+    if (*pt == '\n' || *pt == 9) *pt = ' ';
   }
 }
 
@@ -63,6 +63,8 @@ char** load_program(char *src_file) {
 
 	label_t* labeles;
 	int labelec = 0;
+	int* gotos;
+	int gotosc = 0;
 
   // preprocessing
   strip_newlines(buffer);
@@ -133,47 +135,15 @@ char** load_program(char *src_file) {
 			if(!strcmp(token, ".cgoto")){
 				char found = 0;
 				//Finds the label in the label list
-				for(int j = 0; j<labelec; j++){
-					if(!strcmp(labeles[j].label_name, program[token_count-1])){
-						//Calculates how many steps back you need to go
-						int steps = token_count-labeles[j].pos;
-						
-						//Gets how many digits ther is
-						int n = steps;
-						int count = 0;
-						do{
-							n/=10;
-							count++;
-						}while(n != 0);
-						count++;
-
-						//Creates the tokens for number of steps
-						char* newToken = calloc(++count, sizeof(char));
-						sprintf(newToken, "%d",-steps);
-
-						//Replaces the token .goto with the token .cjump
-						token = realloc(token, sizeof(".cjump"));
-						token = ".cjump";
-
-						//Adds the token to the program
-						program[token_count-1] = newToken;
-						program[token_count] = token;
-
-						found = 1;
-						break;
-						
-
-					}
+				if(gotosc == 0){
+					gotos = calloc(++gotosc, sizeof(int));
+				}else{
+					gotos = realloc(gotos, ++gotosc*sizeof(int));
 				}
-				if(!found){
-					printf("\33[1;31mError:\33[0m Lable \"%s\" not found\n",program[token_count-1]);
-					exit(-1);
-				}
-			}else{
-				//Adds the token to to the program
-				program[token_count] = token;
+				gotos[gotosc-1]=token_count;
+
 			}
-
+			program[token_count] = token;
 			token_count++;
 
 			reading = 0;
@@ -183,6 +153,54 @@ char** load_program(char *src_file) {
 
 		i++;
   }
+
+  //Find and replace all .cgoto with .cjump
+  for (int i = 0; i<gotosc; i++){
+	int token_count = gotos[i];
+	char found = 0;
+	for(int j = 0; j<labelec; j++){
+		if(!strcmp(labeles[j].label_name, program[token_count-1])){
+			//Calculates how many steps you need to go
+			int steps = token_count-labeles[j].pos;
+			
+			//Plus minus 1 bug fix, don't know why it happens :(
+			if(steps < 0) steps++;
+
+			//Gets how many digits ther is
+			int n = steps;
+			int count = 0;
+			do{
+				n/=10;
+				count++;
+			}while(n != 0);
+			count++;
+
+			//Creates the tokens for number of steps
+			char* newToken = calloc(++count, sizeof(char));
+			sprintf(newToken, "%d",-steps);
+
+			//Replaces the token .goto with the token .cjump
+			program[token_count] = realloc(program[token_count], sizeof(".cjump"));
+
+			free(program[token_count]);
+			//Adds the token to the program
+			program[token_count-1] = newToken;
+			program[token_count] = ".cjump";
+
+			found = 1;
+			break;
+			
+
+		}
+	}
+	if(!found){
+		printf("\33[1;31mError:\33[0m Lable \"%s\" not found\n",program[token_count-1]);
+		exit(-1);
+	}
+
+  }
+
+
   //TODO: Add the ability to be able to .cgot forward in the script
 
   free(buffer);

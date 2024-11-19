@@ -3,7 +3,7 @@ SRC := $(wildcard src/*.c)
 
 # add your header files here
 INC := inc/lexer_preprocessor.h 
-FLAGS := -g
+FLAGS := -o3
 
 8inf: 8inf.c $(SRC) $(INC)
 	gcc $(FLAGS) -Iinc 8inf.c $(SRC) -o 8inf

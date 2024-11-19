@@ -6,4 +6,8 @@
   .dup  11 .swap .>?       (is 11 > n?) 
 loop .cgoto                  (then goto loop) 
 ~end of loop here~ .print .newline
+1 test .cgoto
+~not here~ .print .newline
 
+#test
+~Here~ .print .newline

@@ -45,6 +45,9 @@ void interpret(interpreter_t *interpreter, char *instruction){
 			print(interpreter->stack);
 		} else if(!strcmp(&instruction[1], "newline")){
 			newline(interpreter->stack);
+		}else{
+			printf("\33[1;31mError:\33[0m Instruction \"%s\" does not exists\n", &instruction[1]);
+			exit(-1);
 		}
 	}
 	//String push
@@ -109,6 +112,6 @@ interpreter_t* createInterpreter(int stackSize, char** program){
 
 //Frees the interpreter object
 void freeInterpreter(interpreter_t *interpreter){
-	free(interpreter->stack);
+	freeStack(interpreter->stack);
 	free(interpreter);
 }

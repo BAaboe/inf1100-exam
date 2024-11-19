@@ -13,9 +13,21 @@ stackData_t pop(stack_t* stack){
 
 	//Makes sure the stack shrinks when to big
 	if(stack->size/(stack->sp+1) >= 2){
-		stack->size = stack->size>>1;
-		stack->stack = realloc(stack->stack, sizeof(stackData_t)*stack->size);
+		if(stack->size/2 >= stack->minSize){
+			stack->size = stack->size>>1;
+			stack->stack = realloc(stack->stack, sizeof(stackData_t)*stack->size);
+		}
 	}
+
+	return stack->stack[stack->sp];
+}
+
+stackData_t pop_without_shrinking(stack_t* stack){
+	if(stack->sp == 0){
+		printf("\33[1;31mError:\33[0m Poping from empty stack\n");
+		exit(-1);
+	}
+	stack->sp--;
 
 	return stack->stack[stack->sp];
 }
@@ -51,6 +63,7 @@ stack_t* createStack(int startSize){
 	stack_t *stack = malloc(sizeof(stack_t));
 	
 	//Initialize values
+	stack->minSize = startSize;
 	stack->size = startSize;
 	stack->sp = 0;
 	stack->stack = malloc(sizeof(stackData_t)*stack->size);

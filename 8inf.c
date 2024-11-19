@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
 	program = load_program(argv[1]);
 
 	//Creates a interpreter object, with a stack with starting size of 5, and loads the program.
-	interpreter_t* interpreter = createInterpreter(5, program);
+	interpreter_t* interpreter = createInterpreter(10, program);
 	// //Steps through every word in the program
 	 while(1){
 	 	//Gets current instruction

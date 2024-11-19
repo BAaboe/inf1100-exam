@@ -19,12 +19,14 @@ typedef struct{
 typedef struct {
 	stackData_t* stack;
 	int size;
+	int minSize;
 	int sp;
 } stack_t;
 
 
 //Pops the top element from the stack and returns it
 stackData_t pop(stack_t* stack);
+stackData_t pop_without_shrinking(stack_t* stack);
 
 //Push a stackData_t to the stack
 void push(stack_t* stack, stackData_t data);
