@@ -25,6 +25,8 @@ void interpret(interpreter_t *interpreter, char *instruction){
 			eq(interpreter->stack);
 		} else if (!strcmp(&instruction[1], ">?")) {
 			gr(interpreter->stack);
+		} else if (!strcmp(&instruction[1], "<?")) {
+			gr(interpreter->stack);
 		}
 		
 		//Stack operations
